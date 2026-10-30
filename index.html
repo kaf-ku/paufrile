@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>pau's site — root@thinkabelle</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center py-8 sm:py-12 px-3 relative">
+
+  <div id="liveStatusBadge" class="mb-3 flex items-center gap-2 bg-white/80 backdrop-blur-sm border border-[#d8e2d5] px-3 py-1 rounded-full text-[11px] text-gray-500 shadow-sm">
+    <span class="w-2 h-2 rounded-full bg-pink-300 animate-pulse"></span>
+    <span>Viewing: <strong id="currentHashLabel" class="text-gray-700 font-medium">#home</strong></span>
+    <span class="text-gray-300">•</span>
+    <span class="text-[10px] text-gray-400">Click buttons to switch middle panel</span>
+  </div>
+
+  <main class="w-full max-w-[430px] bg-white border border-[#bababa] rounded-[10px] shadow-[0_8px_30px_rgba(0,0,0,0.05)] overflow-hidden relative">
+
+    <header class="w-full bg-[#fae8ef] border-b border-[#bababa] rounded-t-[9px] px-3.5 py-2 flex items-center justify-between">
+      <div class="flex items-center gap-1.5">
+        <button onclick="resetToHome()" title="Home" class="w-2.5 h-2.5 rounded-full bg-[#f4c7d0] border border-[#cfa5ae] hover:scale-110 transition"></button>
+        <button onclick="switchSection('guidelines')" title="#guidelines" class="w-2.5 h-2.5 rounded-full bg-[#f6e5b8] border border-[#d1c094] hover:scale-110 transition"></button>
+        <button onclick="switchSection('loves')" title="#loves" class="w-2.5 h-2.5 rounded-full bg-[#cce8c4] border border-[#9ec295] hover:scale-110 transition"></a>
+      </div>
+
+      <div class="flex items-center gap-3 text-[#96898e] text-xs">
+        <button onclick="showToast('root@thinkabelle:~# mail -s &quot;hello!&quot; pauline@localhost')" title="Send message" class="hover:text-gray-700 transition">
+          <i class="fa-regular fa-envelope"></i>
+        </button>
+        <button onclick="closeMiddlePanel()" title="Close active panel / Return to main card" class="hover:text-gray-700 transition text-sm leading-none">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+    </header>
+
+    <section id="profileTopBlock" class="px-6 pt-5 pb-4">
+      <div class="grid grid-cols-12 gap-4 items-center">
+
+        <div class="col-span-5 flex flex-col items-center text-center">
+          <div class="w-[126px] h-[126px] rounded-[12px] border border-[#b8b8b8] overflow-hidden shadow-sm relative bg-[#f7faf6]">
+            <img id="avatarImg" src="profile.jpg" class="w-full h-full object-cover" alt="Profile Avatar" />
+          </div>
+
+          <h1 class="pixel-pink text-[15px] mt-2.5 tracking-tight select-all">Pauline Flores</h1>
+          <p class="text-[11.5px] text-[#555555] font-light -mt-0.5">20 years old, female</p>
+        </div>
+
+        <div class="col-span-7 flex flex-col gap-2.5 pl-1">
+          <button id="btn-guidelines" onclick="switchSection('guidelines')" class="carrd-btn w-full rounded-[9px] px-3.5 py-2 flex items-center justify-between text-left">
+            <span class="carrd-btn-label">guidelines</span>
+            <i class="fa-solid fa-info text-[#8c8c8c] text-xs w-4 text-center"></i>
+          </button>
+
+          <button id="btn-loves" onclick="switchSection('loves')" class="carrd-btn w-full rounded-[9px] px-3.5 py-2 flex items-center justify-between text-left">
+            <span class="carrd-btn-label">loves</span>
+            <i class="fa-solid fa-heart text-[#8c8c8c] text-xs w-4 text-center"></i>
+          </button>
+
+          <a id="btn-cv" href="https://drive.google.com/file/d/18dt0HmvD5hdy6FCX-IAZxGLi33_-iycB/view?usp=drive_link" target="_blank" class="carrd-btn w-full rounded-[9px] px-3.5 py-2 flex items-center justify-between text-left">
+            <span class="carrd-btn-label">cv</span>
+            <i class="fa-solid fa-file-lines text-[#8c8c8c] text-xs w-4 text-center"></i>
+          </a>
+
+          <div class="text-center mt-0.5">
+            <span onclick="showToast('Connected to Debian homelab: root@thinkabelle:~#')" class="text-[11.5px] text-[#8e8e8e] font-light cursor-pointer hover:text-[#555] transition">
+              root@thinkabelle
+            </span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <div id="middleDividerLine" class="hidden mx-6 border-t border-dashed border-[#e5dce0]"></div>
+
+    <div id="middlePanelsContainer" class="relative">
+
+      <section id="panel-guidelines" class="panel-section hidden px-5 pt-4 pb-5">
+        <div class="grid grid-cols-2 gap-3">
+          <div class="flex flex-col items-center">
+            <h2 class="pixel-pink text-[13px] mb-1.5">to know</h2>
+            <div class="w-full min-h-[112px] border border-[#bcbcbc] rounded-[8px] px-3 py-3 flex items-center justify-center text-center bg-white">
+              <p contenteditable="true" spellcheck="false" class="text-[11.5px] leading-[1.38] text-[#4a4a4a] font-normal outline-none focus:bg-pink-50/30 rounded px-1">
+                cryptography, reverse engineering, vms, topologies, homelabbing
+              </p>
+            </div>
+          </div>
+
+          <div class="flex flex-col items-center">
+            <h2 class="pixel-pink text-[13px] mb-1.5">stay away</h2>
+            <div class="w-full min-h-[112px] border border-[#bcbcbc] rounded-[8px] px-3 py-3 flex items-center justify-center text-center bg-white">
+              <p contenteditable="true" spellcheck="false" class="text-[11.5px] leading-[1.38] text-[#4a4a4a] font-normal outline-none focus:bg-pink-50/30 rounded px-1">
+                segmentation faults, arm assembly, anti-debugging, obfuscated binary
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-4 text-center px-1">
+          <h3 class="pixel-pink text-[13px] mb-1">quote</h3>
+          <p contenteditable="true" spellcheck="false" class="text-[11.2px] leading-[1.38] text-[#4a4a4a] outline-none focus:bg-pink-50/30 rounded px-1">
+            "There is a moment in every data-stream or journey where you have to stop panicking, look at the absolute absurdity of the situation, and just figure out your next move."
+          </p>
+
+          <div class="mt-3 flex items-center justify-center gap-1 text-[9.8px] text-[#555555]">
+            <button id="agreeCheckBtn" onclick="handleTermsClick()" class="hover:text-pink-500 transition flex items-center gap-1">
+              <span id="checkSymbol">✓</span>
+              <span>agree with the <u class="decoration-[#777] underline-offset-2 hover:text-black">terms &amp; conditions</u> to continue to pau's site</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section id="panel-loves" class="panel-section hidden px-5 pt-4 pb-5">
+        <div class="grid grid-cols-12 gap-3.5 items-start">
+
+          <div class="col-span-6 flex flex-col">
+            <div class="flex items-center justify-end gap-1.5 mb-0.5 pr-1">
+              <i class="fa-solid fa-play text-[#dfb4c2] text-[10px]"></i>
+              <span class="pixel-pink text-[10.5px]">Last Watched</span>
+            </div>
+            <div class="text-right pr-1 mb-1">
+              <span contenteditable="true" spellcheck="false" class="text-[10.5px] font-semibold text-[#555555] outline-none">pauflores:</span>
+              <span contenteditable="true" spellcheck="false" class="text-[10.5px] text-[#666666] outline-none">Ep. 13</span>
+            </div>
+
+            <div class="w-full h-[106px] rounded-[10px] border border-[#bcbcbc] overflow-hidden relative bg-[#fcf9fa] shadow-sm">
+              <img id="lovesImg" src="frog_bowl.jpg" class="w-full h-full object-cover" alt="Last Watched" />
+            </div>
+
+            <div class="mt-1.5 flex items-center justify-center gap-1 text-[9.5px] text-[#555555]">
+              <span>▷ <strong class="font-semibold">3m</strong> views</span>
+              <span>♡ <strong class="font-semibold">1.7m</strong> likes</span>
+            </div>
+          </div>
+
+          <div class="col-span-6 pt-1 flex flex-col gap-3">
+            <div>
+              <div class="flex items-center gap-3.5 text-[11.5px] font-semibold text-[#6e6e6e] border-b border-[#eabfd0] pb-0.5 px-0.5">
+                <span title="apparel / aesthetic">a</span>
+                <span title="date / device">d</span>
+                <span title="environment">e</span>
+                <span title="tools / status">t</span>
+              </div>
+              <div class="flex items-center justify-between text-[10.5px] text-[#666666] pt-1 px-0.5">
+                <span contenteditable="true" spellcheck="false" class="outline-none">oct 28</span>
+                <span contenteditable="true" spellcheck="false" class="outline-none tracking-tighter">(˶ᵔ ᵕ ᵔ˶) ‹𝟹</span>
+              </div>
+            </div>
+
+            <div>
+              <div class="flex items-center gap-3.5 text-[11.5px] font-semibold text-[#6e6e6e] border-b border-[#eabfd0] pb-0.5 px-0.5">
+                <span>s</span>
+                <span>o</span>
+                <span>r</span>
+                <span>c</span>
+              </div>
+              <div class="flex items-center justify-between text-[10px] text-[#777777] pt-1 px-0.5">
+                <span contenteditable="true" spellcheck="false" class="outline-none">debian + kvm</span>
+                <span contenteditable="true" spellcheck="false" class="outline-none">ghidra / gdb</span>
+              </div>
+            </div>
+
+            <div class="mt-1 bg-[#fcf3f6] border border-[#f0d8e1] rounded-[7px] p-2 flex items-center gap-2">
+              <i class="fa-solid fa-compact-disc text-[#d9a3b4] text-xs slow-spin"></i>
+              <div class="text-[9.5px] leading-tight text-[#666]">
+                <div class="font-medium text-[#555]">currently debugging:</div>
+                <div contenteditable="true" spellcheck="false" class="text-[#888] outline-none">x86_64 elf binaries &amp; tea</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <section id="panel-cv" class="panel-section hidden px-5 pt-4 pb-5">
+        <div class="text-center mb-2.5">
+          <h2 class="pixel-pink text-[13px]">curriculum vitae</h2>
+          <p class="text-[10px] text-[#777]">cybersecurity • reverse engineering • homelab</p>
+        </div>
+
+        <div class="space-y-2.5 text-[11px]">
+          <div class="border border-[#bcbcbc] rounded-[8px] p-2.5 bg-white">
+            <div class="flex items-center justify-between font-medium text-[#4a4a4a] mb-1">
+              <span><i class="fa-solid fa-terminal text-[#d59eae] mr-1 text-[10px]"></i> stack &amp; labs</span>
+              <span class="text-[9.5px] text-[#888]">root@thinkabelle</span>
+            </div>
+            <p contenteditable="true" spellcheck="false" class="text-[10.5px] text-[#666] leading-snug outline-none">
+              Debian Linux, QEMU/KVM virtualization, Docker containers, Ghidra, GDB, Wireshark, Python &amp; C/Assembly.
+            </p>
+          </div>
+
+          <div class="border border-[#bcbcbc] rounded-[8px] p-2.5 bg-white">
+            <div class="flex items-center justify-between font-medium text-[#4a4a4a] mb-1">
+              <span><i class="fa-solid fa-flag text-[#d59eae] mr-1 text-[10px]"></i> ctf &amp; projects</span>
+              <span class="text-[9.5px] text-[#888]">competitor</span>
+            </div>
+            <p contenteditable="true" spellcheck="false" class="text-[10.5px] text-[#666] leading-snug outline-none">
+              Hack4Gov CTF competitor, binary exploitation &amp; cryptography challenge solver, custom queue systems &amp; ESP32 tinkering.
+            </p>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <footer class="mt-1 border-t border-[#d8ccd0] bg-[#fae8ef] px-4 py-3">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-1.5">
+          <span class="text-[#e3b0c0] text-xs leading-none">♥</span>
+          <span contenteditable="true" spellcheck="false" class="pixel-pink text-[10.5px] outline-none">bread</span>
+        </div>
+        <button onclick="toggleThankYouNote()" class="text-[9.5px] text-[#9e8991] hover:text-[#6e5a61] transition">
+          <span id="footerToggleText">+ note</span>
+        </button>
+      </div>
+
+      <p id="footerThankYou" contenteditable="true" spellcheck="false" class="hidden mt-1.5 text-[10px] leading-relaxed text-[#665c60] text-center outline-none">
+        ฅ₍^•⩊ •マⳊ
+      </p>
+    </footer>
+
+  </main>
+
+  <div id="toastBox" class="fixed bottom-4 left-1/2 -translate-x-1/2 bg-[#313339] text-white text-xs px-4 py-2 rounded-full shadow-lg opacity-0 pointer-events-none transition-opacity duration-300 z-50">
+    <span id="toastText"></span>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

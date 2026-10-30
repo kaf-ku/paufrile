@@ -1,0 +1,106 @@
+:root {
+  --pink-bar: #fae8ef;
+  --pink-text: #f3c1cf;
+  --pink-outline: #d59eae;
+  --border-gray: #bcbcbc;
+  --card-border: #d0d0d0;
+  --text-main: #4a4a4a;
+  --text-muted: #7a7a7a;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: var(--text-main);
+  background-color: #eef5ec;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='104' viewBox='0 0 120 104'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23dce8d7' fill-opacity='0.65'%3E%3Cpolygon points='60 0 120 34.6 120 104 60 104 0 69.3 0 0'/%3E%3Cpolygon fill='%23e4efe0' points='0 34.6 60 0 120 34.6 60 69.3'/%3E%3Cpolygon fill='%23f5f9f4' points='60 69.3 120 34.6 120 104 60 104'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  background-size: 180px 156px;
+  letter-spacing: -0.025em;
+  overflow-x: hidden;
+}
+
+.pixel-pink {
+  font-family: 'Silkscreen', monospace;
+  color: #fae0e7;
+  text-shadow:
+    -1px -1px 0 #d59eae,
+     1px -1px 0 #d59eae,
+    -1px  1px 0 #d59eae,
+     1px  1px 0 #d59eae,
+     0px  1px 2px rgba(213, 158, 174, 0.35);
+  letter-spacing: -0.04em;
+  line-height: 1.15;
+}
+
+.pixel-pink-solid {
+  font-family: 'Silkscreen', monospace;
+  color: #eab3c3;
+  letter-spacing: -0.04em;
+}
+
+.carrd-btn {
+  background: linear-gradient(180deg, #f9ebf0 0%, #f1e9ec 45%, #dde9d7 100%);
+  border: 1px solid #e2dcd5;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.85);
+  transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+  text-decoration: none;
+}
+
+.carrd-btn:hover {
+  background: linear-gradient(180deg, #fceef3 0%, #eadfe4 40%, #d2e4ca 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 3px 6px rgba(168, 185, 160, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.95);
+}
+
+.carrd-btn.active-btn {
+  border-color: #d4a6b5;
+  box-shadow: inset 0 1px 3px rgba(180, 140, 155, 0.22), 0 0 0 2px rgba(243, 193, 207, 0.35);
+  background: linear-gradient(180deg, #f5dce4 0%, #e8e2e5 45%, #d1e2c9 100%);
+}
+
+.carrd-btn-label {
+  font-family: 'Silkscreen', monospace;
+  font-size: 0.78rem;
+  color: #8c8c8c;
+  letter-spacing: -0.03em;
+}
+
+.panel-section {
+  animation: panelFadeIn 0.26s ease-out;
+}
+
+@keyframes panelFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.slow-spin {
+  animation: spin 6s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #eef5ec;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cddbc9;
+  border-radius: 3px;
+}
